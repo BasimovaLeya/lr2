@@ -89,20 +89,20 @@ pipeline {
     agent any
     
     parameters {
-        string(name: 'STUDENT_NAME', defaultValue: 'Student', description: 'Имя студента')
-        string(name: 'PORT', defaultValue: '8081', description: 'Порт')
+        string(name: 'STUDENT_NAME', defaultValue: 'Student', description: 'BasimovaLeya')
+        string(name: 'PORT', defaultValue: '8086', description: 'Порт')
     }
     
     stages {
         stage('Выгружаем код из репозитория') {
             steps {
-                git 'https://github.com/xDeshka/hellojenkins.git'
+                git 'https://github.com/BasimovaLeya/lr2'
             }
         }
         stage('Собираем docker image') {
             steps {
                 script {
-                    dockerImage = docker.build("student-fio-app")
+                    dockerImage = docker.build("student-BasimovaLeya-app")
                 }
             }
         }
@@ -118,8 +118,8 @@ pipeline {
         stage('Запускаем докер контейнер') {
             steps {
                 script {
-                    sh "docker rm -f student-fio-container || true"
-                    sh "docker run -d --name hello-student-container -p ${params.PORT}:${params.PORT} -e STUDENT_NAME='${params.STUDENT_NAME}' -e PORT=${params.PORT} student-fio-app"
+                    sh "docker rm -f student-BasimovaLeya-container || true"
+                    sh "docker run -d --name student-BasimovaLeya-app -p ${params.PORT}:${params.PORT} -e STUDENT_NAME='${params.STUDENT_NAME}' -e PORT=${params.PORT} student-BasimovaLeya-app"
                 }
             }
         }
